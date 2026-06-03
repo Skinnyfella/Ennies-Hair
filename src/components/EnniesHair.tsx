@@ -633,31 +633,9 @@ function OrderModal({ product, qty }: { product: Product; qty: number }) {
 
   const items = [{ productId: product.id, name: product.name, price: product.price, qty, image: product.image }];
 
-  const sendAdminEmail = async (cfg: Awaited<ReturnType<typeof fetchConfig>>, orderId: string) => {
-    const ej = cfg.emailjs;
-    if (!ej.serviceId || !ej.templateId || !ej.publicKey) return;
-    const itemsText = items
-      .map((it) => `- ${it.name} x${it.qty} — ${formatNaira(it.price * it.qty)}`)
-      .join("\n");
-    try {
-      await emailjs.send(
-        ej.serviceId,
-        ej.templateId,
-        {
-          customer_name: f.name,
-          customer_email: f.email || user?.email || "",
-          customer_phone: f.phone,
-          address: f.address,
-          order_id: orderId,
-          order_total: formatNaira(total),
-          items_text: itemsText,
-        },
-        { publicKey: ej.publicKey },
-      );
-    } catch (e) {
-      console.error("EmailJS failed", e);
-    }
-  };
+  // Admin email notification is now sent server-side via Resend
+  // inside verifyPaystackAndCreateOrder. No client-side email needed.
+
 
   const pay = async () => {
     setErr("");
