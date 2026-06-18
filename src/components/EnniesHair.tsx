@@ -224,13 +224,18 @@ function Shop() {
             <button
               key={c}
               onClick={() => setCat(c)}
-              className={`px-5 py-2 rounded-full text-sm border transition ${
+              className={`px-5 py-2 rounded-full text-sm border transition relative ${
                 cat === c
                   ? "bg-burgundy text-primary-foreground border-burgundy"
                   : "bg-card text-foreground border-border hover:border-burgundy hover:text-burgundy"
               }`}
             >
               {c}
+              {c === "Accessories" && (
+                <span className="ml-2 inline-block px-1.5 py-0.5 rounded text-[9px] font-semibold bg-muted text-muted-foreground">
+                  Coming Soon
+                </span>
+              )}
             </button>
           ))}
         </div>
